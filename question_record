@@ -23,3 +23,18 @@
 
                       <!-- 引入 jQuery Mobile 库 -->
                       <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+问题2：sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path
+      遇到证书认证异常，参数无误，经多次连接后成功，猜测原因是github认证较慢
+      最好重新打开页面，不要在原页面上重新打开
+问题3：java.lang.IllegalStateException: closed
+      okhttp的调用response.body().string()只能掉一次，
+      之前代码为：
+      String string = response.body().string();
+      System.out.println(string);
+      return response.body().string();
+      修改后：
+      String string = response.body().string();
+      System.out.println(string);
+      return string;
+问题4：返回用户名为null
+      原因：未在github上填写过用户名
