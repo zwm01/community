@@ -36,5 +36,26 @@
       String string = response.body().string();
       System.out.println(string);
       return string;
+
 问题4：返回用户名为null
       原因：未在github上填写过用户名
+
+问题5：数据库连接异常：Access denied for user ''@'localhost' (using password: NO)
+配置文件key的问题
+报错之前：spring.datasource.driver-class-name
+        spring.datasource.data-username
+        spring.datasource.data-password
+修改之后：spring.datasource.driverClassName
+        spring.datasource.username
+        spring.datasource.password
+
+问题6：数据库连接异常：You must configure either the server or JDBC driver (via the serverTimezone configuration property)
+时区错误
+在spring.datasource.url=jdbc:mysql://localhost:3306/community
+后添加 ?serverTimezone=UTC
+
+问题7：mapper接口Autowired时IDE报错，不影响运行
+因为 @Mapper 这个注解是 Mybatis 提供的，而 @Autowried 注解是 Spring 提供的，
+IDEA能理解 Spring 的上下文，但是却和 Mybatis 关联不上。而且我们可以根据 @Autowried 源码看到，
+默认情况下，@Autowried 要求依赖对象必须存在，那么此时 IDEA 只能给个红色警告了。
+解决方法：在mapper接口上加component注解，这样idea会认为mapper接口是Spring管理的
