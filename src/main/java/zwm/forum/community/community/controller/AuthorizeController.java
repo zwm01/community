@@ -11,7 +11,9 @@ import zwm.forum.community.community.mapper.UserMapper;
 import zwm.forum.community.community.model.User;
 import zwm.forum.community.community.provider.GithubProvider;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
@@ -31,7 +33,8 @@ public class AuthorizeController {
     @GetMapping("/callback")
     public  String callback(@RequestParam(name="code") String code,
                             @RequestParam(name = "state") String state,
-                            HttpServletRequest request){
+                            HttpServletRequest request,
+                            HttpServletResponse response){
         AccessTokenDTO accessTokenDTO=new AccessTokenDTO();
         /*2595068defe3dbc9d8dd*/
 
@@ -53,7 +56,8 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-            request.getSession().setAttribute("user",githubUser);
+            response.addCookie(new Cookie("token",user.getToken()));
+//            request.getSession().setAttribute("user",githubUser);
             return "redirect:/";
         }
         else {
