@@ -59,3 +59,9 @@
 IDEA能理解 Spring 的上下文，但是却和 Mybatis 关联不上。而且我们可以根据 @Autowried 源码看到，
 默认情况下，@Autowried 要求依赖对象必须存在，那么此时 IDEA 只能给个红色警告了。
 解决方法：在mapper接口上加component注解，这样idea会认为mapper接口是Spring管理的
+
+问题8：清除cookie后登录报错
+解决方法：需要添加判断cookie是否为空
+
+问题9：mybatis识别驼峰命名
+解决方法：在配置文件中添加 mybatis.configuration.map-underscore-to-camel-case=true
